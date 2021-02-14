@@ -31,9 +31,9 @@ class Juego(object):
         """
         
         #---    ESTADOS DEL JUEGO   ---#
-        self.menuInicio = False
+        self.menuInicio = True
         self.seleccion = False
-        self.pelea = True
+        self.pelea = False
         self.pausa = False
         self.finPelea = False
         #------------------------------#
@@ -103,9 +103,9 @@ class Juego(object):
             self.jugador1.actualizar()
             self.jugador2.actualizar()
 
-            if self.jugador1.estado == ("patadaI" or "patadaD") and pygame.sprite.spritecollide(self.jugador1, self.lista_sprites, False):
+            if (self.jugador1.estado == "patadaD" or self.jugador1.estado == "patadaI") and pygame.sprite.collide_rect(self.jugador1, self.jugador2):
                 self.jugador2.vida -= 1
-            if self.jugador2.estado == ("patadaI" or "patadaD") and pygame.sprite.spritecollide(self.jugador2, self.lista_sprites, False):
+            if (self.jugador2.estado == "patadaI" or self.jugador2.estado == "patadaD") and pygame.sprite.collide_rect(self.jugador2, self.jugador1):
                 self.jugador1.vida -= 1
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -125,11 +125,18 @@ class Juego(object):
         if self.pelea:
             pantalla.blit(self.ground, (0, 280))
 
-            contenedorVida = pygame.draw.rect(pantalla, GRISOSC, (13, 13, 206, 15))
-            barraVida = pygame.draw.rect(pantalla, ROJO, (16, 16, self.jugador1.vida*2, 10))
-
-            contenedorEnergia = pygame.draw.rect(pantalla, GRISOSC, (13, 30, 156, 10))
-            barraEnergia = pygame.draw.rect(pantalla, AZUL, (16, 33, self.jugador1.energia*1.5, 5))
+            #   contenedores vida 860
+            pygame.draw.rect(pantalla, GRISOSC, (13, 13, 206, 15))
+            pygame.draw.rect(pantalla, GRISOSC, (641, 13, 206, 15))
+            #   barras vida
+            pygame.draw.rect(pantalla, ROJO, (16, 16, self.jugador1.vida*2, 10))
+            pygame.draw.rect(pantalla, ROJO, (644, 16, self.jugador2.vida*2, 10))
+             #   contenedores energía
+            pygame.draw.rect(pantalla, GRISOSC, (13, 30, 156, 10))
+            pygame.draw.rect(pantalla, GRISOSC, (691, 30, 156, 10))
+            #   barras energía
+            pygame.draw.rect(pantalla, AZUL, (16, 33, self.jugador1.energia*1.5, 5))
+            pygame.draw.rect(pantalla, AZUL, (694, 33, self.jugador2.energia*1.5, 5))
 
             self.lista_sprites.draw(pantalla)
         pygame.display.flip()

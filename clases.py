@@ -97,6 +97,16 @@ class Personaje(pygame.sprite.Sprite):
                 self.sheet.subsurface(96,768,96,128),
                 self.sheet.subsurface(192,768,96,128),
                 self.sheet.subsurface(192,768,96,128)
+            ],
+            "muerte":[
+                self.sheet.subsurface(0,640,96,128),
+                self.sheet.subsurface(0,640,96,128),
+                self.sheet.subsurface(96,640,96,128),
+                self.sheet.subsurface(96,640,96,128),
+                self.sheet.subsurface(192,640,96,128),
+                self.sheet.subsurface(192,640,96,128),
+                self.sheet.subsurface(96,640,96,128),
+                self.sheet.subsurface(96,640,96,128),
             ]
         }
         
@@ -146,6 +156,12 @@ class Personaje(pygame.sprite.Sprite):
             self.energia += 1
             if self.energia > 100:
                 self.energia = 100
+            if self.energia < 100:
+                self.energia = 0
+        #   MUERTE DEL PERSONAJE
+        if self.vida <= 0:
+            self.vida = 0
+            self.estado = "muerte"
 
     def movD(self):
         self.estado = "caminaD"
